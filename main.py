@@ -7,14 +7,15 @@ from random import randrange
 
 load_dotenv(find_dotenv()) 
 
-app = flask.Flask(__name__)
+app = flask.Flask(__name__, template_folder='templates')
 
 @app.route("/")
 def home():
-    return "<h1>my flask page</h1>"
+    return index()
 
  
 BASE_URL = 'https://api.themoviedb.org/3/movie/'
+POSTER_CONFIGURATION = 'https://api.themoviedb.org/3/configuration'
 
 def index():
     movie_list = ['634649', '557', '324857']
@@ -22,6 +23,7 @@ def index():
     
     request_url= f'{BASE_URL}{the_movie_id}'
     print(request_url)
+   
     response = requests.get(
         request_url,
     params={
@@ -34,6 +36,11 @@ def index():
     print(weekly_trending_movie_object['tagline'])
     print(weekly_trending_movie_object['genres'])
     print(weekly_trending_movie_object['poster_path'])
-    return flask.render_template("index.html", title=weekly_trending_movie_object['title'])
+
+
+    return flask.render_template("index.html", title=weekly_trending_movie_object['title'],
+    tagline=weekly_trending_movie_object['tagline'], genres=weekly_trending_movie_object['genres'],
+    poster_path=weekly_trending_movie_object['poster_path'])
 
 app.run()
+print(index())

@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Movie Website</title>
+    </head>
+    <body>
+        <h1>{{ title }}</h1>
+        <h2>{{tagline}}</h2>
+        <div>
+        {%for genre in genres %}
+        {{genre ["name"]}}
+        {%endfor%}
+        </div>
+        <div><img style="width: 300px; " src={{'https://image.tmdb.org/t/p/original/' + poster_path}} /></div>
+    </body>
+</html>
